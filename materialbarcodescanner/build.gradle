@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 23
@@ -24,18 +24,18 @@ android {
     }
 }
 
-//apply from: 'gradle-mvn-push.gradle'
-//apply from: 'gradle-jcenter-push.gradle'
+apply from: 'gradle-mvn-push.gradle'
+apply from: 'gradle-jcenter-push.gradle'
 
-//publish {
-//    userOrg = 'edwardvraak'
-//    groupId = 'com.edwardvanraak'
-//    artifactId = 'MaterialBarcodeScanner'
-//	bintrayUser = project.hasProperty('bintray.user') ? project.property('bintray.user') : System.getenv('BINTRAY_USER')
-//    bintrayKey = project.hasProperty('bintray.apikey') ? project.property('bintray.apikey') : System.getenv('BINTRAY_API_KEY')
-//    version = '0.0.2-ALPHA'
-//    description = 'Easy to use barcode reader for your Android Project!'
-//}
+publish {
+    userOrg = 'edwardvraak'
+    groupId = 'com.edwardvanraak'
+    artifactId = 'MaterialBarcodeScanner'
+	bintrayUser = project.hasProperty('bintray.user') ? project.property('bintray.user') : System.getenv('BINTRAY_USER')
+    bintrayKey = project.hasProperty('bintray.apikey') ? project.property('bintray.apikey') : System.getenv('BINTRAY_API_KEY')
+    version = '0.0.2-ALPHA'
+    description = 'Easy to use barcode reader for your Android Project!'
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
