@@ -120,6 +120,9 @@ public class MaterialBarcodeScannerActivity extends AppCompatActivity {
         if(mMaterialBarcodeScannerBuilder.isFlashEnabledByDefault()){
             flashToggleIcon.setBackgroundResource(R.drawable.ic_flash_off_white_24dp);
         }
+        if(!mMaterialBarcodeScannerBuilder.isFlashModeEnabled()){//for hiding flash
+            flashOnButton.setVisibility(View.GONE);
+        }
     }
 
     /**
