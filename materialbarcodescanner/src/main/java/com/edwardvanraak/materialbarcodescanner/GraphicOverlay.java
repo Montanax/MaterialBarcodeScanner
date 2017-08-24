@@ -17,6 +17,7 @@ package com.edwardvanraak.materialbarcodescanner;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -29,11 +30,11 @@ import java.util.Set;
  * A view which renders a series of custom graphics to be overlayed on top of an associated preview
  * (i.e., the camera preview).  The creator can add graphics objects, update the objects, and remove
  * them, triggering the appropriate drawing and invalidation within the view.<p>
- *
+ * <p>
  * Supports scaling and mirroring of the graphics relative the camera's preview properties.  The
  * idea is that detection items are expressed in terms of a preview size, but need to be scaled up
  * to the full view size, and also mirrored in the case of the front-facing camera.<p>
- *
+ * <p>
  * Associated {@link Graphic} items should use the following methods to convert to view coordinates
  * for the graphics that are drawn:
  * <ol>
@@ -51,6 +52,7 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
     private float mHeightScaleFactor = 1.0f;
     private int mFacing = CameraSource.CAMERA_FACING_BACK;
     private Set<T> mGraphics = new HashSet<>();
+    @Nullable
     private T mFirstGraphic;
 
     /**
@@ -101,7 +103,8 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
         public float translateX(float x) {
             if (mOverlay.mFacing == CameraSource.CAMERA_FACING_FRONT) {
                 return mOverlay.getWidth() - scaleX(x);
-            } else {
+            }
+            else {
                 return scaleX(x);
             }
         }
@@ -163,6 +166,7 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
     /**
      * Returns the first (oldest) graphic added.  This is used
      * to get the barcode that was detected first.
+     *
      * @return graphic containing the barcode, or null if no barcodes are detected.
      */
     public T getFirstGraphic() {

@@ -1,0 +1,1 @@
+clear;./gradlew build publish artifactoryPublish

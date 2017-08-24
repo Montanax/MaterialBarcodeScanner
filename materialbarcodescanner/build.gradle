@@ -1,20 +1,19 @@
-apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: "com.android.library"
+apply plugin: "maven-publish"
+apply plugin: "com.jfrog.artifactory"
+apply from: "artifactory.gradle"
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 23
+        minSdkVersion 18
         versionCode 1
-        versionName "0.0.6-ALPHA"
     }
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     productFlavors {
@@ -24,24 +23,16 @@ android {
     }
 }
 
-apply from: 'gradle-mvn-push.gradle'
-apply from: 'gradle-jcenter-push.gradle'
-
-publish {
-    userOrg = 'edwardvraak'
-    groupId = 'com.edwardvanraak'
-    artifactId = 'MaterialBarcodeScanner'
-	bintrayUser = project.hasProperty('bintray.user') ? project.property('bintray.user') : System.getenv('BINTRAY_USER')
-    bintrayKey = project.hasProperty('bintray.apikey') ? project.property('bintray.apikey') : System.getenv('BINTRAY_API_KEY')
-    version = '0.0.2-ALPHA'
-    description = 'Easy to use barcode reader for your Android Project!'
-}
-
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.google.android.gms:play-services-vision:8.4.0'
-    compile 'com.android.support:design:23.0.1'
+    compile "org.greenrobot:eventbus:3.0.0"
+    compile "org.slf4j:slf4j-api:1.7.25"
+
+    //compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.1.3'
+    //compile group: 'io.reactivex.rxjava2', name: 'rxandroid', version: '2.0.1'
+    //compile "io.reactivex:rxandroid:1.2.1"
+    //compile "io.reactivex:rxjava:1.3.0"
+
+    compile "com.google.android.gms:play-services-vision:${playServicesVersion}"
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
 }

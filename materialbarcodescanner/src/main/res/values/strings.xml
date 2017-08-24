@@ -1,5 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="library_name">MaterialBarcodeScanner</string>
     <string name="permission_camera_rationale">Access to the camera is needed for barcode detection.</string>
     <string name="no_camera_permission">Cannot start the barcode reader because the camera permission was not granted.</string>
+    <string name="flash_icon">flash icon</string>
+    <string name="barcode_square">barcode square</string>
 </resources>

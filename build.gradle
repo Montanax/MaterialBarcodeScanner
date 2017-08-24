@@ -1,29 +1,50 @@
 buildscript {
     repositories {
+        google()
         jcenter()
         mavenCentral()
+        mavenLocal()
+        maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0'
-        classpath 'com.novoda:bintray-release:0.3.4'
+        classpath "com.android.tools.build:gradle:2.3.3"
+        classpath "org.codehaus.groovy:groovy-android-gradle-plugin:1.2.0"
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:latest.release"
     }
 }
 
 allprojects {
     repositories {
+        google()
         jcenter()
         mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        mavenLocal()
+        maven { url "https://jitpack.io" }
+        maven {
+            credentials {
+                username = System.getenv("artifactory_username")?.trim() ?: trusonaUsername
+                password = System.getenv("artifactory_password")?.trim() ?: trusonaPassword
+            }
+            url "https://trusona.jfrog.io/trusona/sdk-snapshots-local/"
+        }
+    }
+
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:all,-processing"
+        }
     }
 }
 
 ext {
-    compileSdkVersion = 23
-    buildToolsVersion = "23.0.3"
-    supportLibVersion = "23.3.0"
-}
+    playServicesVersion = "11.2.0"
+    supportLibVersion = "26.0.1"
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.12'
-}
+    theVersion = "0.0.3"
 
+    theGroupId = "com.trusona.android"
+    theArtifactId = "materialbarcodescanner"
+
+    theArtifactSource = "./build/outputs/aar/materialbarcodescanner-release.aar"
+    debugArtifactSource = "./build/outputs/aar/materialbarcodescanner-debug.aar"
+}

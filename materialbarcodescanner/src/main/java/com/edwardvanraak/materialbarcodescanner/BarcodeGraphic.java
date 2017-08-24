@@ -33,10 +33,9 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
 
     private Paint mRectPaint;
     private Paint mTextPaint;
-    private volatile Barcode mBarcode;
+    private volatile Barcode barcode;
 
     private int mStrokeWidth = 24;
-    private int mCornerWidth = 64;
     private int mCorderPadding = mStrokeWidth / 2;
 
     public BarcodeGraphic(GraphicOverlay overlay, final int trackerColor) {
@@ -63,7 +62,7 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
     }
 
     public Barcode getBarcode() {
-        return mBarcode;
+        return barcode;
     }
 
     /**
@@ -71,7 +70,7 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
      * relevant portions of the overlay to trigger a redraw.
      */
     void updateItem(Barcode barcode) {
-        mBarcode = barcode;
+        this.barcode = barcode;
         postInvalidate();
     }
 
@@ -80,7 +79,7 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
      */
     @Override
     public void draw(Canvas canvas) {
-        Barcode barcode = mBarcode;
+        Barcode barcode = this.barcode;
         if (barcode == null) {
             return;
         }
@@ -97,6 +96,7 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
         /**
          * Draw the top left corner
          */
+        int mCornerWidth = 64;
         canvas.drawLine(rect.left - mCorderPadding, rect.top, rect.left + mCornerWidth, rect.top, mRectPaint);
         canvas.drawLine(rect.left, rect.top, rect.left, rect.top + mCornerWidth, mRectPaint);
 

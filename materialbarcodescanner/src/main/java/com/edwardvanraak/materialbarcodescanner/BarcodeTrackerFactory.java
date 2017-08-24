@@ -25,25 +25,28 @@ import com.google.android.gms.vision.barcode.Barcode;
  */
 public class BarcodeTrackerFactory implements MultiProcessor.Factory<Barcode> {
 
-    private GraphicOverlay<BarcodeGraphic> mGraphicOverlay;
-    private BarcodeGraphicTracker.NewDetectionListener mDetectionListener;
-    private int mTrackerColor;
+    private GraphicOverlay<BarcodeGraphic> barcodeGraphicOverlay;
+    private NewDetectionListener newDetectionListener;
+    private int trackerColor;
 
-    BarcodeTrackerFactory(GraphicOverlay<BarcodeGraphic> barcodeGraphicOverlay, BarcodeGraphicTracker.NewDetectionListener listener, int trackerColor) {
-        mGraphicOverlay = barcodeGraphicOverlay;
-        mDetectionListener = listener;
-        mTrackerColor = trackerColor;
+    BarcodeTrackerFactory(GraphicOverlay<BarcodeGraphic> barcodeGraphicOverlay,
+                          NewDetectionListener newDetectionListener,
+                          int trackerColor) {
+
+        this.barcodeGraphicOverlay = barcodeGraphicOverlay;
+        this.newDetectionListener = newDetectionListener;
+        this.trackerColor = trackerColor;
     }
 
     @Override
     public Tracker<Barcode> create(Barcode barcode) {
-        BarcodeGraphic graphic = new BarcodeGraphic(mGraphicOverlay, mTrackerColor);
-        BarcodeGraphicTracker tracker = new BarcodeGraphicTracker(mGraphicOverlay, graphic);
-        if (mDetectionListener != null){
-            tracker.setListener(mDetectionListener);
+        BarcodeGraphic graphic = new BarcodeGraphic(barcodeGraphicOverlay, trackerColor);
+        BarcodeGraphicTracker tracker = new BarcodeGraphicTracker(barcodeGraphicOverlay, graphic);
+
+        if (newDetectionListener != null) {
+            tracker.setListener(newDetectionListener);
         }
+
         return tracker;
     }
-
 }
-

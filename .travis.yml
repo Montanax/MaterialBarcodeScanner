@@ -1,0 +1,48 @@
+branches:
+  only:
+    - master
+    - release
+    - /^.*-snapshot$/
+    - wip-improvements ## temp
+
+filter_secrets: false
+sudo: required
+language: android
+
+android:
+  components:
+    # core
+    - tools
+    - tools # NOT a typo
+    - platform-tools
+    - build-tools-26.0.1
+    - android-26
+    - android-25
+    - android-24
+    - extra
+    - add-on
+
+    # extras
+    - extra-android-support
+    #- extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    #- addon-google_apis-google-24
+
+script:
+  - ./gradlew clean build --refresh-dependencies
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  on:
+    all_branches: true
+  script:
+    ./sbin/ci-publisher.sh $TRAVIS_BRANCH $TRAVIS_EVENT_TYPE
+
+notifications:
+  slack:
+    on_success: always
+    on_failure: always
+  rooms:
+    secure: fxMVMYw182zY1BDJPilR5dKu95RldkOPBilcgzrdbXBsyvwM6FGPxNe8uUuvkuE+4qVGu51wTpJ5QK/hY0tR6LCzYbOpkN7Iv6duCSSLECAuBVwH3rLdvne9lKdmiOIIGEv26iQ2PJL2cl5douHz+UaUJfhci9IyvglskveoF77cGQ1AawBHZ6jYqdQfF5q8+b/uERnMHJlz44daX1k7GdEMVEnX5S3CNL0TOKcRgCLhZwc8QU4y/Tv+a8rWpOwmDQ/ZHtYmpoUu40pktOCkJJJmrlCo6FjflNy2Pdx662JAw/bEaqxHZS8e0w4m+R9MLO/swJBBGQLJrO9LkTwhxqf8U1ymoN1vC2ZbeXkPZsLMOhrIeFa7RFAIu+m7o1PCEDVUG4ahwlmVQsKcEuk0Wvac4lSKUKGsXrkHi6vqnX0d5RzE/WfpnGygEsARwzTq7AxGOh3EPzRPypq7Y/LW1kEinb4HDXzfy5/GI4DOpfsUyCz511Z/0i2taZal2OQk2V3LwKYO7+6vM4GAQj15zI8+MYCz2R5C/m0jfOKxGvan9hAZjmlH02G2Qd7Zth4Of//aMs6BYwyX8O11wzyC+SEFi13AvnI8imPDjE2NX7LbVRs7INxHDyMvVyZj1N/nFMlqEqT+oisFfd81QIFWvFtKZZl0OSuhejTYy60GPHo=
