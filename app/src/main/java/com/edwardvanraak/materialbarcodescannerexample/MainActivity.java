@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                         result.setText(barcode.rawValue);
                     }
                 })
+                .withFlashModeVisible(false)
                 .build();
         materialBarcodeScanner.startScan();
     }

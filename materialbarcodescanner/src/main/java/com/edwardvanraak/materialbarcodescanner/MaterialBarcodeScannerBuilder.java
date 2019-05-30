@@ -42,6 +42,8 @@ public class MaterialBarcodeScannerBuilder {
     protected int mTrackerResourceID = R.drawable.material_barcode_square_512;
     protected int mTrackerDetectedResourceID = R.drawable.material_barcode_square_512_green;
 
+    private boolean mFlashModeEnabled = true;
+
     /**
      * Default constructor
      */
@@ -325,5 +327,21 @@ public class MaterialBarcodeScannerBuilder {
 
     public void clean() {
         mActivity = null;
+    }
+
+    /**
+     * used for hiding or showing flash button on the camera
+     */
+    public MaterialBarcodeScannerBuilder withFlashModeVisible(boolean enabled){
+        mFlashModeEnabled = enabled;
+        return this;
+    }
+
+    /**
+     * Get the flash enabled by default value associated with this builder
+     * @return
+     */
+    public boolean isFlashModeEnabled() {
+        return mFlashModeEnabled;
     }
 }
